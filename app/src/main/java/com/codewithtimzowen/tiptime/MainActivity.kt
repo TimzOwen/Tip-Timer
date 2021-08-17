@@ -8,7 +8,7 @@ import java.text.NumberFormat
 class MainActivity : AppCompatActivity() {
 
     // initialize binding here
-    lateinit var binding : ActivityMainBinding
+    private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,20 +24,24 @@ class MainActivity : AppCompatActivity() {
     // function to calculate the tip
     private fun calculateTip() {
         val stringEditText = binding.costOfService.text.toString()
-        val cost = stringEditText.toDouble()
-        val roudUp = binding.roundUpSwitch.isChecked
+        val cost = stringEditText.toDoubleOrNull()
+
+        if(cost == null){
+            binding.tipResult.text = ""
+            return
+        }
 
         // get the checked radio button
-        val checkedId = binding.tipOption.checkedRadioButtonId
-        val tipPercentage = when(checkedId){
+        val tipPercentage = when(binding.tipOption.checkedRadioButtonId){
             R.id.twenty_option -> 0.20
             R.id.eighteen_option -> 0.18
             else -> 0.15
         }
         var tip = tipPercentage * cost
-        if(roudUp){
+        if(binding.roundUpSwitch.isChecked){
             tip = kotlin.math.ceil(tip)
         }
+
         val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
         binding.tipResult.text = getString(R.string.tip_amount,formattedTip)
 
