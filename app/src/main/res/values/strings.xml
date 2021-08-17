@@ -7,4 +7,6 @@
     <string name="ok_15">Ok (15%)</string>
     <string name="round_uo_tip">Round uo Tip ?</string>
     <string name="calculate">Calculate</string>
+    <string name="label">Label</string>
+    <string name="tip_amount">Tip Amount</string>
 </resources>
